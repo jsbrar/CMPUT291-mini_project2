@@ -56,26 +56,32 @@ def parse():
             else:
                 pass
 
-    term = [0] * len(tis)
-    #print(len(tis), term, '\n')
-    #print(tis)
+    term = [[0 for i in range(2)] for j in range(len(tis) + len(descs))]#[0][0] * (len(tis) + len(descs))
+    count = 0
     for item in range(len(tis)):
         #print(item, tis[item])
         #pdb.set_trace()
-        term[item] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', tis[item], flags=re.IGNORECASE)
+        term[item][0] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', tis[item], flags=re.IGNORECASE)
+        term[item][1] = ids[item]
+        count += 1
+
+    for item in range(len(descs)):
+        term[item+count][0] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', tis[item], flags=re.IGNORECASE)
+        term[item+count][1] = ids[item]
 
     tefile = open("terms.txt", "w+")
     pdfile = open("pdates.txt", "w+")
     prfile = open("prices.txt", "w+")
     adfile = open("ads.txt", "w+")
 
+    count = 0
     for item in range(len(dates)):
         pdfile.write(str(dates[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
         prfile.write(str(prices[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
         adfile.write(str(ids[item]) + ":" + str(save[item+2]))
         for line in term:
-            for t in line:
-                tefile.write(str(t) + ":" + str(ids[item]) + '\n')
+            for t in line[0]:
+                tefile.write(str(t) + ":" + str(line[1]) + '\n')
     
     tefile.close()
     pdfile.close()
