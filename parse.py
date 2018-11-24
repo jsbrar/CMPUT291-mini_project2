@@ -1,6 +1,7 @@
 import sys
 import fileinput
 import re
+import pdb
 
 #Liam McDonald
 #Note to self: use cmd on windows computer, cd to a2 and do python parse.py < test.txt
@@ -55,6 +56,14 @@ def parse():
             else:
                 pass
 
+    term = [0] * len(tis)
+    #print(len(tis), term, '\n')
+    #print(tis)
+    for item in range(len(tis)):
+        #print(item, tis[item])
+        #pdb.set_trace()
+        term[item] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', tis[item], flags=re.IGNORECASE)
+
     tefile = open("terms.txt", "w+")
     pdfile = open("pdates.txt", "w+")
     prfile = open("prices.txt", "w+")
@@ -64,6 +73,9 @@ def parse():
         pdfile.write(str(dates[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
         prfile.write(str(prices[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
         adfile.write(str(ids[item]) + ":" + str(save[item+2]))
+        for line in term:
+            for t in line:
+                tefile.write(str(t) + ":" + str(ids[item]) + '\n')
     
     tefile.close()
     pdfile.close()
