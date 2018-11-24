@@ -15,9 +15,12 @@ def parse():
     prices = []
     inf = []
     total = []
+    save = []
     for line in sys.stdin:
         inf.append(line)
-    #print(inf)
+        save.append(line)
+
+    #print(save)
 
     for i in range(len(inf)):
         total.append([])
@@ -59,6 +62,8 @@ def parse():
 
     for item in range(len(dates)):
         pdfile.write(str(dates[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
+        prfile.write(str(prices[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
+        adfile.write(str(ids[item]) + ":" + str(save[item+2]))
     
     tefile.close()
     pdfile.close()
