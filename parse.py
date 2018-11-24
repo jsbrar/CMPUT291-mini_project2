@@ -64,9 +64,10 @@ def parse():
         term[item][0] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', tis[item], flags=re.IGNORECASE)
         term[item][1] = ids[item]
         count += 1
+        #print(tis[item], ' ', term[item][0])
 
     for item in range(len(descs)):
-        term[item+count][0] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', tis[item], flags=re.IGNORECASE)
+        term[item+count][0] = re.findall('[a-z0-9_-][a-z0-9_-][a-z0-9_-]+', descs[item], flags=re.IGNORECASE)
         term[item+count][1] = ids[item]
 
     tefile = open("terms.txt", "w+")
@@ -82,6 +83,7 @@ def parse():
         for line in term:
             for t in line[0]:
                 tefile.write(str(t) + ":" + str(line[1]) + '\n')
+                print(t, line[1])
     
     tefile.close()
     pdfile.close()
