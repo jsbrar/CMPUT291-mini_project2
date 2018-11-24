@@ -91,10 +91,10 @@ def parse():
     prfile.close()
     adfile.close()
 
-    os.system('sort tefile.txt | uniq')
-    os.system('sort pdfile.txt | uniq')
-    os.system('sort prfile.txt | uniq')
-    os.system('sort adfile.txt | uniq')
+    os.system('sort -u tefile.txt')
+    os.system('sort -u pdfile.txt')
+    os.system('sort -u prfile.txt')
+    os.system('sort -u adfile.txt')
 
 
 def main():
