@@ -31,8 +31,7 @@ def parse():
             if piece != '' and piece != '\n':
                 total[count].append(piece)
         count += 1
-    print(total)
-
+    #print(total)
     
     for line in total:
         for item in range(len(line)):
@@ -57,6 +56,14 @@ def parse():
     pdfile = open("pdates.txt", "w+")
     prfile = open("prices.txt", "w+")
     adfile = open("ads.txt", "w+")
+
+    for item in range(len(dates)):
+        pdfile.write(str(dates[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
+    
+    tefile.close()
+    pdfile.close()
+    prfile.close()
+    adfile.close()
 
 def main():
     print("------------------------------")
