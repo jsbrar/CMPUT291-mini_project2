@@ -36,7 +36,7 @@ def query():
             final.append(part)
     print(final)
     
-    oper = ["<=", ">=", "<", ">", "="]
+    oper = ["<=", ">=", "<", ">", "=", "%"]
     
     for item in range(len(final)):
         if final[item] == ">=":
@@ -49,6 +49,8 @@ def query():
         elif final[item] == ">":
             pass
         elif final[item] == "=":
+            pass
+        elif final[item] == "%":
             pass
         else:
             if item == 0:
