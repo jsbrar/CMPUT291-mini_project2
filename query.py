@@ -2,6 +2,7 @@ import re
 
 def query():
     mess = []
+    final = []
     quest = input("Enter valid query: ")
     for char in range(len(quest)):
         if quest[char] != '<' and quest[char] != '>' and quest[char] != '=':
@@ -11,19 +12,23 @@ def query():
         else:
             #print("flag1", quest[char])
             if quest[char] == '=' and check == 0:
-                mess.append(quest[char])
+                mess.append(' ' + quest[char] + ' ')
             elif quest[char] == '<' or quest[char] == '>':
                 if quest[char+1] == '=':
                     check = 1
                     if quest[char] == '<':
-                        mess.append('<=')
+                        mess.append(' <= ')
                     elif quest[char] == '>':
-                        mess.append('>=')
+                        mess.append(' >= ')
                 else:
-                    mess.append(quest[char])
+                    mess.append(' ' + quest[char] + ' ')
             
     print(mess) 
-      
+    mess = ''.join(mess)
+    print(mess)
+    
+    final = re.split(' ', mess)
+    print(final)
 
 def main():
     query()
