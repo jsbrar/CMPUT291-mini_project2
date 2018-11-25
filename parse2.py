@@ -83,7 +83,7 @@ def parse():
         adfile.write(str(ids[item]) + ":" + str(save[item+2]))
         for line in term:
             for t in line[0]:
-                tefile.write(str(t) + ":" + str(line[1]) + '\n')
+                tefile.write(str(t).lower() + ":" + str(line[1]) + '\n')
                 #print(t, line[1])
     
     tefile.close()
