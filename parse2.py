@@ -78,8 +78,8 @@ def parse():
 
     count = 0
     for item in range(len(dates)):
-        pdfile.write(str(dates[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
-        prfile.write(str(prices[item]) + ":" + str(ids[item]) + ":" + str(cats[item]) + ":" + str(locs[item]) + '\n')
+        pdfile.write(str(dates[item]) + ":" + str(ids[item]) + "," + str(cats[item]) + "," + str(locs[item]) + '\n')
+        prfile.write(str(prices[item]) + ":" + str(ids[item]) + "," + str(cats[item]) + "," + str(locs[item]) + '\n')
         adfile.write(str(ids[item]) + ":" + str(save[item+2]))
         for line in term:
             for t in line[0]:
