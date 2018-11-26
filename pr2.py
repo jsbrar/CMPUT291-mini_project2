@@ -3,6 +3,7 @@ import fileinput
 import re
 import pdb
 import os
+from bsddb3 import db
 
 def parse():
     ids = []
@@ -80,29 +81,28 @@ def parse():
         adfile.write(str(ids[item]) + ":" + str(save[item+2]))
         for line in term:
             for t in line[0]:
-                tefile.write(str(t) + ":" + str(line[1]) + '\n')
+                tefile.write(str(t).lower() + ":" + str(line[1]) + '\n')
                 #print(t, line[1])
     
-    tefile.close()
-    pdfile.close()
-    prfile.close()
-    adfile.close()
-
+    tefile.close() 
+    pdfile.close() 
+    prfile.close() 
+    adfile.close()    
 
 
 
 def indexes():
     
-    os.system('sort -u terms.txt')
-    os.system('sort -u pdates.txt')
-    os.system('sort -u prices.txt')
-    os.system('sort -u ads.txt')    
+    os.system('sort -u terms.txt > terms_sorted.txt')
+    os.system('sort -u pdates.txt > pdates_sorted.txt')
+    os.system('sort -u prices.txt > prices_sorted.txt')
+    os.system('sort -u ads.txt > ads_sorted.txt')    
     
     #run perl script on all files, make new file
-    os.system("perl break.pl < terms.txt > terms_new.txt")
-    os.system("perl break.pl < pdates.txt > pdates_new.txt")
-    os.system("perl break.pl < prices.txt > prices_new.txt")
-    os.system("perl break.pl < ads.txt > ads_new.txt")
+    os.system("perl break.pl < terms_sorted.txt > terms_new.txt")
+    os.system("perl break.pl < pdates_sorted.txt > pdates_new.txt")
+    os.system("perl break.pl < prices_sorted.txt > prices_new.txt")
+    os.system("perl break.pl < ads_sorted.txt > ads_new.txt")
     
     # old file = new file
     os.system("mv terms_new.txt terms.txt")
@@ -115,14 +115,29 @@ def indexes():
     os.system("db_load -c duplicates=1 -T -t btree -f pdates.txt pdates.idx")
     os.system("db_load -c duplicates=1 -T -t btree -f prices.txt prices.idx")
     os.system("db_load -c duplicates=1 -T -t hash -f ads.txt ads.idx")
+
+def query1():
+    database = db.DB()
+    DB_File = "terms.idx"
+    database.open(DB_File, None, db.DB_BTREE)
+    curs = database.cursor()
+
+    iter = curs.set_range("camera".encode("utf-8")) 
+    while iter != None:
+        if str(iter[0].decode("utf-8")) == "camera":
+            print("term: " + str(iter[0].decode("utf-8")) + ", ad id : " + str(iter[1].decode("utf-8")))
+        iter = curs.next()
     
-    
-    
+
+           
 
 def main():
     print("------------------------------")
     parse()
+    print("h")
     indexes()
+    print("h")
+    query1()
   
     
 
