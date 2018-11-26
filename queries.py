@@ -14,11 +14,10 @@ def query1():
     iter = curs.set_range("camera".encode("utf-8")) 
     ad_ids_list = []
     while str(iter[0].decode("utf-8")) == "camera":
-        if str(iter[0].decode("utf-8")) == "camera":
             print("term: " + str(iter[0].decode("utf-8")) + ", ad id : " + str(iter[1].decode("utf-8")))
             ad_ids_list.append(str(iter[1].decode("utf-8")))    
             iter = curs.next()
-        print(iter)
+
 
 
 def main():
