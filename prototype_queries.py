@@ -174,3 +174,23 @@ def query8(cat, pile=[]):
         iter = curs.next()
 
     database.close()
+    
+"""
+def final(pile, setting):
+    answer = []
+    if setting == "brief":
+        titles = open("titles.txt", "r")
+        for item in pile:
+            for title in titles:
+                test = title.split(":")
+                if test[1] == item:
+                    answer.append(test[0])
+     elif setting == "full":
+        ads = open(ads.txt, "r")
+        for item in pile:
+            for ad in ads:
+                test = ad.split(":")
+                if test[0] == item:
+                    answer.append(test[1])
+     return answer
+"""
