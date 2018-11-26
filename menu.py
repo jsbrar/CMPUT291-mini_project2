@@ -3,7 +3,8 @@ def main():
     print("\nWelcome to Mini-project 2.")
     print("--------------------------")
     while exit == False:
-        pile = [0]
+        pile = []
+        flag = True
         print("Option 1: Search Terms.")
         print("Option 2: Search Starting Terms.")
         print("Option 3: Search Dates.")
@@ -37,13 +38,16 @@ def main():
             print('\nMatching ads:')
             for item in pile:
                 print(str(item) + '\n')
-            pile = [0]
+            pile = []
+            flag = False
         elif option == 8:
             exit = True
         else:
             print("Invalid input.")
         
-        if len(pile) == 0:
+        if len(pile) == 0 and flag == True:
             print("\nNo entries match your query.\n")
+        else:
+            flag = True
 
 main()
