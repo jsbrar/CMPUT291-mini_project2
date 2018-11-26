@@ -2,6 +2,5 @@
 
 Liam McDonald - ldmcdona
 Navjit Gill - navjit
-Jujhar Singh Brar - jsbrar
 
-We did not collaborate with anyone outside our group on this project
+We discussed how Berkeley DB worked with Otman and his group, who directed us to resources on eclass.
