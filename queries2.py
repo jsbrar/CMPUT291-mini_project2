@@ -69,42 +69,6 @@ def borf(final_list,brief):
     
         
 
-def query2(): #query 2 need major changes
-    database = db.DB()
-    DB_File = "terms.idx"
-    database.open(DB_File, None, db.DB_BTREE)
-    curs = database.cursor()
-
-    iter = curs.set_range("camera".encode("utf-8")) 
-    ad_ids_list = []
-    while str(iter[0].decode("utf-8")) == "camera":
-            ad_ids_list.append(str(iter[1].decode("utf-8")))  
-            iter = curs.next()
-    #print(ad_ids_list)  
-    
-    curs.close()
-    database.close()
-    database = db.DB()
-    DB_File = "ads.idx"
-    database.open(DB_File, None, db.DB_HASH)
-    curs = database.cursor()    
-    for ad in ad_ids_list:
-        iter = curs.set_range(ad.encode("utf-8"))
-        while str(iter[0].decode("utf-8")) == ad:
-            line = str(iter[1].decode("utf-8"))
-            for i in range(len(line)):
-                if i <= (len(line) - 9):
-                    if line[i] == "t" and line[i+1] == "i" and line[i+2] == ">" and line[i+3] == "c" and line[i+4] == "a" and line[i+5] == "m" and line[i+6] == "e" and line[i+7] == "r" and line[i+8] == "a":
-                        print(" ")
-                        print("Record: " + str(iter[1].decode("utf-8")))
-                    if i <= (len(line) - 9):
-                        if line[i] == "s" and line[i+1] == "c" and line[i+2] == ">" and line[i+3] == "c" and line[i+4] == "a" and line[i+5] == "m" and line[i+6] == "e" and line[i+7] == "r" and line[i+8] == "a":
-                            print(" ")
-                            print("Record: " + str(iter[1].decode("utf-8")))                     
-            iter = curs.next() 
-            
-    curs.close()
-    database.close()
 # <        
 def query5(MAX):
     MIN = 0
@@ -147,6 +111,34 @@ def query5(MAX):
             
     #curs.close()
     #database.close()
+def query5b(MAX):
+    MIN = 0
+    #MAX = 20
+    database = db.DB()
+    DB_File = "prices.idx"
+    database.open(DB_File, None, db.DB_BTREE)
+    curs = database.cursor()
+    
+
+    iter = curs.first()
+    full_list = []
+    while (iter):
+        #print(int(iter[0].decode("utf-8"))>= MIN)
+        #print(int(iter[0].decode("utf-8"))< MAX)
+        if int(iter[0].decode("utf-8")) >= MIN and int(iter[0].decode("utf-8")) > MAX:
+            ad_id = str(iter[1].decode("utf-8"))
+            ad_id2 = ad_id.split(",")
+            a = ad_id2[0]
+            full_list.append(a)      
+            
+            #print(full_list)
+            curs.next()            
+        iter = curs.next()
+    
+    curs.close()
+    database.close()  
+    return full_list
+
 
 def query6(MAX):
     MIN = 0
@@ -189,6 +181,34 @@ def query6(MAX):
             
     #curs.close()
     #database.close()   
+def query6b(MAX):
+    MIN = 0
+    #MAX = 20
+    database = db.DB()
+    DB_File = "prices.idx"
+    database.open(DB_File, None, db.DB_BTREE)
+    curs = database.cursor()
+    
+
+    iter = curs.first()
+    full_list = []
+    while (iter):
+        #print(int(iter[0].decode("utf-8"))>= MIN)
+        #print(int(iter[0].decode("utf-8"))< MAX)
+        if int(iter[0].decode("utf-8")) >= MIN and int(iter[0].decode("utf-8")) <= MAX:
+            ad_id = str(iter[1].decode("utf-8"))
+            ad_id2 = ad_id.split(",")
+            a = ad_id2[0]
+            full_list.append(a)      
+            
+            #print(full_list)
+            curs.next()            
+        iter = curs.next()
+    
+    curs.close()
+    database.close()  
+    
+    return full_list
 
 #date <= entered
 def query3(one_date):
@@ -243,6 +263,44 @@ def query3(one_date):
     #curs.close()
     #database.close()    
 #date > entered
+def query3b(one_date):
+    #one_date = "2018/11/05"
+    #one_date = one_date.split("/")
+    
+    database = db.DB()
+    DB_File = "pdates.idx"
+    database.open(DB_File, None, db.DB_BTREE)
+    curs = database.cursor()
+    
+
+    iter = curs.first()
+    full_list = []
+    while (iter):
+        #print(int(iter[0].decode("utf-8"))>= MIN)
+        #print(int(iter[0].decode("utf-8"))< MAX)
+        index_date = str(iter[0].decode("utf-8"))
+        #index_dates = index_dates.split("/")
+        #dates <= input
+        
+        #print(datetime(int(one_date[0]),int(one_date[1]),int(one_date[2])) <= datetime(int(one_date[0]),int(one_date[1]),int(one_date[2])))
+        
+        newdate1 = time.strptime(one_date,"%Y/%m/%d")
+        newdate2 = time.strptime(index_date,"%Y/%m/%d")
+        #print(newdate2 <= newdate1)
+        if  newdate2 >= newdate1:
+            ad_id = str(iter[1].decode("utf-8"))
+            ad_id2 = ad_id.split(",")
+            a = ad_id2[0]
+            full_list.append(a)      
+            
+                
+        iter = curs.next()
+    #print(full_list)  
+    curs.close()
+    database.close()  
+    
+    return full_list
+
 def query4(one_date):
     #one_date = "2018/11/05"
     #one_date = one_date.split("/")
@@ -292,7 +350,41 @@ def query4(one_date):
         #except:
             #pass
     #curs.close()
-    #database.close()    
+    #database.close()   
+def query4b(one_date):
+    #one_date = "2018/11/05"
+    #one_date = one_date.split("/")
+    
+    database = db.DB()
+    DB_File = "pdates.idx"
+    database.open(DB_File, None, db.DB_BTREE)
+    curs = database.cursor()
+    
+
+    iter = curs.first()
+    full_list = []
+    while (iter):
+        #print(int(iter[0].decode("utf-8"))>= MIN)
+        #print(int(iter[0].decode("utf-8"))< MAX)
+        index_date = str(iter[0].decode("utf-8"))
+        #index_dates = index_dates.split("/")
+        #dates <= input
+        
+        #print(datetime(int(one_date[0]),int(one_date[1]),int(one_date[2])) <= datetime(int(one_date[0]),int(one_date[1]),int(one_date[2])))
+        
+        newdate1 = time.strptime(one_date,"%Y/%m/%d")#date
+        newdate2 = time.strptime(index_date,"%Y/%m/%d")# ///
+        #print(newdate2 > newdate1)
+        if  newdate2 < newdate1:
+            ad_id = str(iter[1].decode("utf-8"))
+            ad_id2 = ad_id.split(",")
+            a = ad_id2[0]
+            full_list.append(a)      
+        iter = curs.next()
+    #print(full_list)  
+    curs.close()
+    database.close()  
+    return full_list 
     
     
     
@@ -366,9 +458,22 @@ def main():
             ans = input("contine(y/n)")
             if ans == "n":
                 continue_game = False    
+        elif len(final) == 3 and final[0] == "date" and final[1] == ">=":
+            qresult = query3b(str(final[2]))
+            borf(qresult,brief)
+            ans = input("contine(y/n)")
+            if ans == "n":
+                continue_game = False            
                 
         elif len(final) == 3 and final[0] == "date" and final[1] == ">":
             qresult = query4(str(final[2]))
+            borf(qresult,brief)
+            ans = input("contine(y/n)")
+            if ans == "n":
+                continue_game = False
+        
+        elif len(final) == 3 and final[0] == "date" and final[1] == "<":
+            qresult = query4b(str(final[2]))
             borf(qresult,brief)
             ans = input("contine(y/n)")
             if ans == "n":
@@ -380,14 +485,34 @@ def main():
             ans = input("contine(y/n)")
             if ans == "n":
                 continue_game = False 
+        
+        elif len(final) == 3 and final[0] == "price" and final[1] == ">": 
+            qresult = query5b(int(final[2]))
+            borf(qresult,brief)
+            ans = input("contine(y/n)")
+            if ans == "n":
+                continue_game = False 
+        
             
         elif len(final) == 3 and final[0] == "price" and final[1] == ">=": 
             qresult = query6(int(final[2]))
             borf(qresult,brief)
             ans = input("contine(y/n)")
             if ans == "n":
-                continue_game = False           
-            
+                continue_game = False        
+        elif len(final) == 3 and final[0] == "price" and final[1] == "<=": 
+            qresult = query6b(int(final[2]))
+            borf(qresult,brief)
+            ans = input("contine(y/n)")
+            if ans == "n":
+                continue_game = False                 
+        #elif what conditions it happens under
+           #call function have it return ad ids
+           #borf(qresult,brief)
+            #ans = input("contine(y/n)")
+            #if ans == "n":
+                #continue_game = False     
+           
         
       
             
