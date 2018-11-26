@@ -14,7 +14,8 @@ def main():
         print("Option 5: Search Locations.")
         print("Option 6: Search Categories.")
         print("Option 7: Finalize Query.")
-        print("Option 8: Exit.")
+        print("Option 8: Toggle Output Setting.")
+        print("Option 9: Exit.")
         option = int(input("Choose an option: "))
         if option == 1:
             term = input("Enter a term to search: ")
