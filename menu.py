@@ -4,6 +4,8 @@ def main():
     print("--------------------------")
     while exit == False:
         pile = []
+        answer = []
+        setting = "brief"
         flag = True
         print("Option 1: Search Terms.")
         print("Option 2: Search Starting Terms.")
@@ -35,12 +37,19 @@ def main():
             cat = input("Enter a category to search: ")
             pile == query6(cat, pile)
         elif option == 7:
+            answer = final(pile, setting)
             print('\nMatching ads:')
-            for item in pile:
-                print(str(item) + '\n')
+            for item in range(len(pile)):
+                print(str(pile[item]) + ":" + str(answer[item]) +'\n')
             pile = []
             flag = False
         elif option == 8:
+            if setting == "brief":
+                setting = "full"
+            else:
+                setting = "brief"
+             print("Output Setting: " + setting + '\n')
+        elif option == 9:
             exit = True
         else:
             print("Invalid input.")
