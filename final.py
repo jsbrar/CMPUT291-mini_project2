@@ -6,6 +6,7 @@ import os
 import time
 from bsddb3 import db
 
+# Finds term
 def query1(word):
     database = db.DB()
     DB_File = "terms.idx"
@@ -23,6 +24,7 @@ def query1(word):
     #print(ad_ids_list)
     return ad_ids_list
 
+# Prints based on brief or full
 def borf(final_list,brief):
     if not brief:
         try:
@@ -36,6 +38,8 @@ def borf(final_list,brief):
                     print("Record: " + str(iter[1].decode("utf-8")))  
                     print(" ")
                     iter = curs.next() 
+                print("Record: " + str(iter[1].decode("utf-8")))  
+                print(" ")                
         except:
             pass
     else:
@@ -59,17 +63,33 @@ def borf(final_list,brief):
                         if line[i] == "/" and line[i+1] == "t" and  line[i+2] == "i":
                             indexend = i-1
                             #print(indexend)
-                    print(ad_code + ": "+line[indexs+1:indexend]) 
+                    print(ad_code + ": "+line[indexs+1:indexend])
+                    
+                    iter = curs.next() 
+                
+                ad_code = str(iter[0].decode("utf-8"))
+                #print("Record: " + str(iter[1].decode("utf-8")))  
+                #print(" ")
+                line = str(iter[1].decode("utf-8"))
+                for i in range(len(line)-3):
+                    if line[i] == "<" and line[i+1] == "t" and  line[i+2] == "i":
+                        indexs = i+3
+                        #print(indexs)
+                for i in range(len(line)-3):
+                    if line[i] == "/" and line[i+1] == "t" and  line[i+2] == "i":
+                        indexend = i-1
+                        #print(indexend)
+                        print(ad_code + ": "+line[indexs+1:indexend])                
                         
                     
                 #print(str(iter[0].decode("utf-8")))
-                    iter = curs.next()     
+                        
         except:
             pass
     
         
 
-# <        
+# Price <         
 def query5(MAX):
     MIN = 0
     #MAX = 20
@@ -111,6 +131,8 @@ def query5(MAX):
             
     #curs.close()
     #database.close()
+
+#price >
 def query5b(MAX):
     MIN = 0
     #MAX = 20
@@ -139,7 +161,7 @@ def query5b(MAX):
     database.close()  
     return full_list
 
-
+# Price >=
 def query6(MAX):
     MIN = 0
     #MAX = 20
@@ -180,7 +202,9 @@ def query6(MAX):
             #iter = curs.next() 
             
     #curs.close()
-    #database.close()   
+    #database.close()
+
+#price <= 
 def query6b(MAX):
     MIN = 0
     #MAX = 20
@@ -210,6 +234,7 @@ def query6b(MAX):
     
     return full_list
 
+# Term%
 def query2(word, pile=[]):
     new_pile = []
     database = db.DB()
@@ -266,7 +291,7 @@ def query2(word, pile=[]):
     database.close()
     return new_pile 
 
-#date <= entered
+# Date <=
 def query3(one_date):
     #one_date = "2018/11/05"
     #one_date = one_date.split("/")
@@ -319,6 +344,8 @@ def query3(one_date):
     #curs.close()
     #database.close()    
 #date > entered
+
+# Date >=
 def query3b(one_date):
     #one_date = "2018/11/05"
     #one_date = one_date.split("/")
@@ -357,6 +384,7 @@ def query3b(one_date):
     
     return full_list
 
+# Date >
 def query4(one_date):
     #one_date = "2018/11/05"
     #one_date = one_date.split("/")
@@ -406,7 +434,9 @@ def query4(one_date):
         #except:
             #pass
     #curs.close()
-    #database.close()   
+    #database.close()
+    
+# Date <
 def query4b(one_date):
     #one_date = "2018/11/05"
     #one_date = one_date.split("/")
@@ -498,7 +528,7 @@ def queryl4(oper, value, pile=[]):
 
     database.close()
     return new_pile
-
+# Price 
 def queryl6(oper, value, pile=[]):
     new_pile = []
     key = ["<=", ">=", "=", "<", ">"].index(oper)
@@ -547,7 +577,7 @@ def queryl6(oper, value, pile=[]):
     
     database.close()
     return new_pile
-
+# 
 def queryl7(loc, pile=[]):
     new_pile = []
     database = db.DB()
