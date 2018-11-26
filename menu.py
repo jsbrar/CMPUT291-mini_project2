@@ -1,9 +1,9 @@
 def main():
     exit = False
+    print("\nWelcome to Mini-project 2.")
+    print("--------------------------")
     while exit == False:
         pile = [0]
-        print("Welcome to Mini-project 2.")
-        print("--------------------------")
         print("Option 1: Search Terms.")
         print("Option 2: Search Starting Terms.")
         print("Option 3: Search Dates.")
@@ -12,7 +12,7 @@ def main():
         print("Option 6: Search Categories.")
         print("Option 7: Finalize Query.")
         print("Option 8: Exit.")
-        option = input("Choose an option: ")
+        option = int(input("Choose an option: "))
         if option == 1:
             term = input("Enter a term to search: ")
             pile = query1(term, pile)
@@ -34,12 +34,16 @@ def main():
             cat = input("Enter a category to search: ")
             pile == query6(cat, pile)
         elif option == 7:
+            print('\nMatching ads:')
             for item in pile:
-                print(item)
+                print(str(item) + '\n')
+            pile = [0]
         elif option == 8:
             exit = True
         else:
             print("Invalid input.")
         
         if len(pile) == 0:
-            print("No entries match your query.")
+            print("\nNo entries match your query.\n")
+
+main()
