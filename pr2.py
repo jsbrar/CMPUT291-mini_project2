@@ -116,20 +116,6 @@ def indexes():
     os.system("db_load -c duplicates=1 -T -t btree -f prices.txt prices.idx")
     os.system("db_load -c duplicates=1 -T -t hash -f ads.txt ads.idx")
 
-def query1():
-    database = db.DB()
-    DB_File = "terms.idx"
-    database.open(DB_File, None, db.DB_BTREE)
-    curs = database.cursor()
-
-    iter = curs.set_range("camera".encode("utf-8")) 
-    while iter != None:
-        if str(iter[0].decode("utf-8")) == "camera":
-            print("term: " + str(iter[0].decode("utf-8")) + ", ad id : " + str(iter[1].decode("utf-8")))
-        iter = curs.next()
-    
-
-           
 
 def main():
     print("------------------------------")
@@ -137,7 +123,6 @@ def main():
     print("h")
     indexes()
     print("h")
-    query1()
   
     
 
