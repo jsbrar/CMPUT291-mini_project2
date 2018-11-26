@@ -38,10 +38,14 @@ def borf(final_list,brief):
                     print("Record: " + str(iter[1].decode("utf-8")))  
                     print(" ")
                     iter = curs.next() 
-                print("Record: " + str(iter[1].decode("utf-8")))  
-                print(" ")                
+                try:    
+                    print("Record: " + str(iter[1].decode("utf-8")))  
+                    print(" ")   
+                except:
+                    pass
         except:
             pass
+        
     else:
         try:
             database = db.DB()
@@ -66,20 +70,22 @@ def borf(final_list,brief):
                     print(ad_code + ": "+line[indexs+1:indexend])
                     
                     iter = curs.next() 
-                
-                ad_code = str(iter[0].decode("utf-8"))
-                #print("Record: " + str(iter[1].decode("utf-8")))  
-                #print(" ")
-                line = str(iter[1].decode("utf-8"))
-                for i in range(len(line)-3):
-                    if line[i] == "<" and line[i+1] == "t" and  line[i+2] == "i":
-                        indexs = i+3
-                        #print(indexs)
-                for i in range(len(line)-3):
-                    if line[i] == "/" and line[i+1] == "t" and  line[i+2] == "i":
-                        indexend = i-1
-                        #print(indexend)
-                        print(ad_code + ": "+line[indexs+1:indexend])                
+                try:
+                    ad_code = str(iter[0].decode("utf-8"))
+                    #print("Record: " + str(iter[1].decode("utf-8")))  
+                    #print(" ")
+                    line = str(iter[1].decode("utf-8"))
+                    for i in range(len(line)-3):
+                        if line[i] == "<" and line[i+1] == "t" and  line[i+2] == "i":
+                            indexs = i+3
+                            #print(indexs)
+                    for i in range(len(line)-3):
+                        if line[i] == "/" and line[i+1] == "t" and  line[i+2] == "i":
+                            indexend = i-1
+                            #print(indexend)
+                            print(ad_code + ": "+line[indexs+1:indexend])    
+                except:
+                    pass
                         
                     
                 #print(str(iter[0].decode("utf-8")))
@@ -640,8 +646,8 @@ def queryl8(cat, pile=[]):
 def main():
     continue_game = True
     brief = True
-    qresult = []
-    while continue_game:    
+    while continue_game: 
+        qresult = []
         print("------------------------------")
         mess = []
         temp = []
