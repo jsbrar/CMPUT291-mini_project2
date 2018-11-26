@@ -10,6 +10,26 @@ def query4(oper, value, pile=[]):
     dafile = "pdate.idx"
     database.open(dafile, None, db.BD_BTREE)
     curs = database.cursor()
+    
+    """
+    if oper == "<=":
+        iter = curse.set_range(value.encode("utf-8"), value.encode("utf-8"))
+    elif oper == ">=":
+        iter = curse.set_range(value.encode("utf-8"), None,  value.encode("utf-8"))
+    elif oper == "=":
+        iter = curs.set_range(value.encode("utf-8"))
+    elif oper == "<":
+        fixed = value.split("/")
+        fixed[2] = str(int(fix[2] + 1))
+        fixed = '/'.join(fixed)
+        iter = curs.set_range(value.encode("utf-8"), fixed.encode("utf-8"))
+    elif oper == ">":
+        fixed = value.split("/")
+        fixed[2] = str(int(fix[2] - 1))
+        fixed = '/'.join(fixed)
+        iter = curs.set_range(value.encode("utf-8"), None, fixed.encode("utf-8"))
+        
+    """
 
     iter = curs.set_range(value.encode("utf-8"))
 
